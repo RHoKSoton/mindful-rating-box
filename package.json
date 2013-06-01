@@ -1,0 +1,13 @@
+{
+  "name": "mindfulmusic",
+  "version": "0.0.1",
+  "author": "Benjie Gillam <code@benjiegillam.com>",
+  "scripts": {
+    "start": "sudo node_modules/.bin/coffee app.coffee"
+  },
+  "dependencies": {
+    "raspi2c": "git://github.com/sysrun/node-raspi2c.git",
+    "coffee-script": "~1.6.3",
+    "async": "~0.2.9"
+  }
+}
