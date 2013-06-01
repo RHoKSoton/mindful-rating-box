@@ -7,17 +7,17 @@ mcp = new MCP230xx(0x20, 1, 16)
 OUTPUT = 0
 INPUT = 1
 
+# The main loop
+main = ->
+  while 1
+    mcp.inputAll (pins) ->
+      console.log if pins[8] then "Off" else "On"
+
 async.series
   init: (next) ->
     mcp.init next
   config: (next) ->
-    console.log "Trying it..."
-    mcp.config 0, OUTPUT, next
-  output: (next) ->
-    mcp.output 0, 1, next
-  wait: (next) ->
-    setTimeout next, 1000
-  off: (next) ->
-    mcp.output 0, 0, next
-  cleanup: (next) ->
-    console.log "Done"
+    mcp.config [8..15], INPUT
+    mcp.config [0..7], OUTPUT
+    mcp.pullup [8..15], 1, next
+  main: main
