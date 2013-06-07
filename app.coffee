@@ -10,6 +10,8 @@ OUTPUT = 0
 INPUT = 1
 HAPPY_BUTTON_PIN = 8
 SAD_BUTTON_PIN = 9
+VOL_MINUS_BUTTON_PIN = 10
+VOL_PLUS_BUTTON_PIN = 11
 
 # The main loop
 main = ->
@@ -46,6 +48,12 @@ main = ->
             node.skipPressed()
           else if type is LONG
             node.pause()
+        checkState VOL_MINUS_BUTTON_PIN, 'volMinusButton', (type) ->
+          if type isnt NONE
+            node.volumeDownPressed()
+        checkState VOL_PLUS_BUTTON_PIN, 'volPlusButton', (type) ->
+          if type isnt NONE
+            node.volumeUpPressed()
         next()
     , 0
 
