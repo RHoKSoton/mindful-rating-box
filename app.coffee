@@ -41,6 +41,10 @@ main = ->
         checkState HAPPY_BUTTON_PIN, 'happyButton', (type) ->
           if type is SHORT
             node.happyPressed()
+            mcp.output 0, 1, next
+            setTimeout ->
+              mcp.output 0, 0, ->
+            , 3000
           else if type is LONG
             node.play()
         checkState SAD_BUTTON_PIN, 'sadButton', (type) ->
@@ -64,8 +68,8 @@ async.series
     mcp.config [8..15], INPUT
     mcp.config [0..7], OUTPUT, next
   turnOnLed: (next) ->
-    console.log "Turning on the LED"
-    mcp.output 0, 1, next
+    console.log "Turning off the LED"
+    mcp.output 0, 0, next
   pullup: (next) ->
     mcp.pullup [8..15], 1, next
   main: main
