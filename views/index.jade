@@ -1,0 +1,67 @@
+doctype 5
+html(lang="en")
+  head
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap-responsive.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js')
+    script(src='/bootstrap/js/bootstrap.min.js')
+    script(src="/socket.io/socket.io.js")
+    title Mindful Music
+    script
+      var socket = io.connect("http://"+window.location.host);
+      socket.on('status', outputStatus);
+      function outputStatus(status) {
+        var lines = status.split(/\n/);
+        var $status = $("#status");
+        var $trackname = $("#trackname");
+        var $volume = $("#volume");
+        for (var i in lines) {
+          var line = lines[i];
+          var matches = line.match(/(state|title|volume): (.*)/);
+          if (matches) {
+            if(matches[1] == "state") {
+              $status.text(matches[2]);
+            } else if(matches[1] == "title") {
+              $trackname.text(matches[2]);
+            } else if(matches[1] == "volume") {
+              $volume.text(matches[2]);
+            }
+          }
+          console.log(line);
+        }
+      }
+
+  body
+    h1 Mindful music
+    table.table
+      tr
+        th Patient
+        th Node status
+        th Track
+        th Volume
+      tr
+        td Alice
+        td Disconnected
+        td -
+        td -
+      tr
+        td Bob
+        td Disconnected
+        td -
+        td -
+      tr
+        td Charlie
+        td Disconnected
+        td -
+        td -
+      tr
+        td Dave
+        td#status -
+        td#trackname -
+        td#volume -
+      tr
+        td Eugene
+        td Disconnected
+        td -
+        td -
